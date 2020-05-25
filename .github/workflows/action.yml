@@ -20,10 +20,12 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+    - name: checkout
+      uses: actions/checkout@master
 
     #- uses: ecommerce/action-netlify-deploy@v1
-    - uses: ameen-alam/gatsby-boilerplate@master
+    - name: deploy
+      uses: ameen-alam/gatsby-boilerplate@master
       with:
         NETLIFY_AUTH_TOKEN: ${{ secrets.MY_TOKEN_SECRET }}
         NETLIFY_DEPLOY_TO_PROD: true
