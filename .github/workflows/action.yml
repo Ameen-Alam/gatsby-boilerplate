@@ -1,31 +1,27 @@
-# This is a basic workflow to help you get started with Actions
-
-name: 'My Workflow'
-
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
+# .github/workflows/netlify.yml
+name: Build and Deploy to Netlify
 on:
-  push:
-    branches: master
-  pull_request:
-    branches: master
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+    push:
+        branches:
+            - master
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    runs-on: ubuntu-18.04
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - name: checkout
-      uses: actions/checkout@master
+      - uses: actions/checkout@v2
 
-    #- uses: ecommerce/action-netlify-deploy@v1
-    - name: deploy
-      uses: ameen-alam/gatsby-boilerplate@master
-      with:
-        NETLIFY_AUTH_TOKEN: ${{ secrets.MY_TOKEN_SECRET }}
-        NETLIFY_DEPLOY_TO_PROD: true
+      # ( Build to ./dist or other directory... )
+
+      - name: Deploy to Netlify
+        uses: ameenalam/actions-netlify@v1.1
+        with:
+          publish-dir: './dist'
+          production-branch: master
+          github-token: ${{ secrets.GITHUBTOKEN }}
+          deploy-message: "Deploy from GitHub Actions"
+          enable-pull-request-comment: true
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.MY_TOKEN_SECRET }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
