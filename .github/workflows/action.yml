@@ -14,7 +14,7 @@ jobs:
       # ( Build to ./dist or other directory... )
 
       - name: Deploy to Netlify
-        uses: ameenalam/actions-netlify@v1.1
+        uses: Ameen-Alam/gatsby-boilerplate@v1.1
         with:
           publish-dir: './dist'
           production-branch: master
